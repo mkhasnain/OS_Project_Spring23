@@ -32,7 +32,7 @@ int main()
 		return 0;
 	}	
 	int _id[noC];	
-	for(int i=0; i<noC; i++){	{
+	for(int i=0; i<noC; i++){
 		_id[i] = i+100;
 	}
 	
@@ -106,7 +106,6 @@ void *iceCream(void *_id){
 		pthread_exit (NULL);
 	}
 	else{
-
 		sem_wait(&f1);
 
 		if(_flavors [0] > 0){
@@ -119,7 +118,6 @@ void *iceCream(void *_id){
 		}
 
 		sem_post(&f1);
-
 		sem_wait(&f2);
 
 		if(_flavors [1] > 0){
