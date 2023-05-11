@@ -85,8 +85,6 @@ void *iceCream(void *_id){
 	sem_wait(&ticketc);
 
 	if(ticket <= 0)	{
-
-if(ticket <= 0){
 		printf("\nCustomer [%d]: Leaving Shop. [REASON]: Tickets Finished\n", _ID);
 		syscall (335, "Leaving Shop. [REASON]: Tickets Finished\n",_ID);
 		sleep (1);
