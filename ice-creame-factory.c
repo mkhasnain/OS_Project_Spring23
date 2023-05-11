@@ -27,16 +27,12 @@ int main()
 	scanf("%d", &noC);
 	printf("\n\n");
 
-	if(noC > ticket || noC <= 0)
-	{
+	if(noC > ticket || noC <= 0){
 		printf("\n\nInvalid Input\n\n");
 		return 0;
-	}
-	
-	int _id[noC];
-	
-	for(int i=0; i<noC; i++)
-	{
+	}	
+	int _id[noC];	
+	for(int i=0; i<noC; i++){	{
 		_id[i] = i+100;
 	}
 	
@@ -52,16 +48,13 @@ int main()
 	sem_init(&t2, 0, 1);
 
 	sem_init(&paymentC, 0, 1);
-
 	pthread_t _customer [noC];
 
-	for(int i=0; i<noC; i++)
-	{
+	for(int i=0; i<noC; i++){
 		pthread_create(&_customer[i], 0, &iceCream, (void*) &_id[i]);
 	}
 	
-	for(int i=0; i<noC; i++)
-	{
+	for(int i=0; i<noC; i++){
 		pthread_join(_customer[i], NULL);
 	}
 
@@ -82,34 +75,23 @@ int main()
 	sem_destroy(&t2);
 
 	sem_destroy(&paymentc);
-
-
 	return 0;
-
 }
 
-void *iceCream(void *_id)
-{
+void *iceCream(void *_id){
 	int _ID = (int)_id, checkRaceCond_1 = 0; 
 	double bill = 0.0;
 
 	sem_wait(&ticketc);
 
-	if(ticket <= 0)
-	{
+	if(ticket <= 0)	{
 
-if(ticket <= 0)
-
-	{
+if(ticket <= 0){
 		printf("\nCustomer [%d]: Leaving Shop. [REASON]: Tickets Finished\n", _ID);
 		syscall (335, "Leaving Shop. [REASON]: Tickets Finished\n",_ID);
 		sleep (1);
 		pthread_exit(NULL);
-
 	}
-
-
-
 	ticket--;
 
 	printf("Customer [%d] Got Ticket.\n", _ID);
@@ -120,20 +102,16 @@ if(ticket <= 0)
 
 	sem_wait(&flavorC);
 
-	if(_flavors[0] <= 0 && _flavors[1] <= 0 && _flavors[2] <= 0)
-
-	{
+	if(_flavors[0] <= 0 && _flavors[1] <= 0 && _flavors[2] <= 0){
 		syscall (335, "Leaving Shop. [REASON]: Flavours Finished\n", __ID);
 		sleep (1);
 		pthread_exit (NULL);
 	}
-	else
-	{
+	else{
 
 		sem_wait(&f1);
 
-		if(_flavors [0] > 0)
-		{
+		if(_flavors [0] > 0){
 			_flavors [0]--;
 			checkRaceCond_1++;
 			bill = bill+ priceFlav_1;
@@ -146,26 +124,19 @@ if(ticket <= 0)
 
 		sem_wait(&f2);
 
-		if(_flavors [1] > 0)
-		{
+		if(_flavors [1] > 0){
 			_flavors[1]--
 			checkRaceCond_1++;
 			bill = bill + priceFlav_2;
 			printf("Customer[%d]: Got Flavour [1].\n", _ID);
 			syscall(335, "Got Flavour [1].\n",_ID);
 			sleep(1);
-
 		}
 
-
-
 		sem_post(&f2);
-
 		sem_wait(&f3);
 
-		if(_flavors [2] > 0)
-
-		{
+		if(_flavors [2] > 0){
 			_flavors[2]--;
 			checkRaceCond_1++;
 			bill = bill + priceFlav_3;
@@ -175,11 +146,7 @@ if(ticket <= 0)
 		}
 
 		sem_post(&f3);
-
-
-		if (checkRaceCond_1 == 0)
-		{
-		
+		if (checkRaceCond_1 == 0){		
 			printf("\nCustomer [%d]: Leaving Shop. [REASON]: Flavours Finished\n", _ID);
 			syscall(335, "Leaving Shop. [REASON]: Flavours Finished\n",_ID);
 			sleep(1);
@@ -191,42 +158,29 @@ if(ticket <= 0)
 	syscall(335, "Got Flavour(s). Leaving Flavor Counter\n", _ID);
 
 	sem_post(&flavorC);
-
 	sem_wait(&toppingC);
-
 	sem_wait(&t1);
 
-	if(_toppings [0] > 0)
-	{
-		
+	if(_toppings [0] > 0){		
 		_toppings [0]--;
 		bill = bill + priceTopp_1;
 	}
 
 	sem_post(&t1);
-
 	sem_wait(&t2);
 
-
-	if(_toppings [1] > 0)
-
-	{
+	if(_toppings [1] > 0){
 		_toppings [1]--;
 		bill = bill + priceTopp_2;
 	}
 
-	
 	sem_post(&t2);
-
 	printf("\nCustomer [%d]: Leaving Topping Counter.\n", _ID);
 	syscall(335, "Leaving Topping Counter.\n",_ID);
 
 	sem_post(&toppingC);
-
 	sleep(2);
-
 	sem_wait(&payment();
-
 	revenue = revenue + bill;
 
 	printf("\nCustomer[%d]: Billed: $ %f.\n", _ID, bill);
