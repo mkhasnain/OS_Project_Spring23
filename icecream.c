@@ -108,14 +108,14 @@ void *iceCream(void *_id){
 	
 	if(ticket <= 0)	{
 		//printf("\nCustomer[%d]: Leaving Shop. [REASON]: Tickets Finished\n", _ID);
-		syscall(333,"Leaving Shop. [REASON]: Tickets Finished\n",_ID);
+		syscall(335,"Leaving Shop. [REASON]: Tickets Finished\n",_ID);
 		sleep(1);
 		pthread_exit(NULL);
 	}
 	
 	ticket--;
 	//printf("Customer[%d] Got Ticket.\n", _ID);
-	syscall(333,"Got Ticket.\n",_ID);
+	syscall(335,"Got Ticket.\n",_ID);
 	
 	sem_post(&ticketC);
 	// ticket counter - EXIT
@@ -133,7 +133,7 @@ void *iceCream(void *_id){
 	// [REASON]: If this is not used then a thread will check each condition below
 	//           which will be time consuming.
 	if(_flavors[0] <= 0 && _flavors[1] <= 0 && _flavors[2] <= 0){
-		syscall(333,"Leaving Shop. [REASON]: Flavours Finished\n", _ID);
+		syscall(335,"Leaving Shop. [REASON]: Flavours Finished\n", _ID);
 		sleep(1);
 		pthread_exit(NULL);
 	}
@@ -146,7 +146,7 @@ void *iceCream(void *_id){
 			checkRaceCond_1++;
 			bill = bill + priceFlav_1;
 			//printf("\nCustomer[%d]: Got Flavour[0].\n", _ID);
-			syscall(333,"Got Flavour[0].\n",_ID);
+			syscall(335,"Got Flavour[0].\n",_ID);
 			sleep(1);
 		}
 		
@@ -160,7 +160,7 @@ void *iceCream(void *_id){
 			checkRaceCond_1++;
 			bill = bill + priceFlav_2;
 			//printf("Customer[%d]: Got Flavour[1].\n", _ID);
-			syscall(333,"Got Flavour[1].\n",_ID);
+			syscall(335,"Got Flavour[1].\n",_ID);
 			sleep(1);
 		}
 		
@@ -174,7 +174,7 @@ void *iceCream(void *_id){
 			checkRaceCond_1++;
 			bill = bill + priceFlav_3;
 			//printf("Customer[%d]: Got Flavour[2].\n", _ID);
-			syscall(333,"Got Flavour[2].\n",_ID);
+			syscall(335,"Got Flavour[2].\n",_ID);
 			sleep(1);
 		}
 		
@@ -185,14 +185,14 @@ void *iceCream(void *_id){
 		// threads will exit
 		if(checkRaceCond_1 == 0){
 			//printf("\nCustomer[%d]: Leaving Shop. [REASON]: Flavours Finished\n", _ID);
-			syscall(333,"Leaving Shop. [REASON]: Flavours Finished\n",_ID);
+			syscall(335,"Leaving Shop. [REASON]: Flavours Finished\n",_ID);
 			sleep(1);
 			pthread_exit(NULL);
 		}
 	}
 	
 	//printf("\nCustomer[%d]: Got Flavour(s). Leaving Flavor Counter\n", _ID);
-	syscall(333,"Got Flavour(s). Leaving Flavor Counter\n",_ID);
+	syscall(335,"Got Flavour(s). Leaving Flavor Counter\n",_ID);
 	//sleep(2);
 	
 	sem_post(&flavorC);
@@ -223,7 +223,7 @@ void *iceCream(void *_id){
 	sem_post(&t2);
 	
 	//printf("\nCustomer[%d]: Leaving Topping Counter.\n", _ID);
-	syscall(333,"Leaving Topping Counter.\n",_ID);
+	syscall(335,"Leaving Topping Counter.\n",_ID);
 	
 	sem_post(&toppingC);
 	// toppings counter - EXIT
@@ -238,7 +238,7 @@ void *iceCream(void *_id){
 	//printf("\nCustomer[%d]: Billed: $ %f.\n", _ID, bill);
 	char a[100];
 	sprintf(a,"Billed: $ %f.\n",bill);
-	syscall(333,a,_ID);	
+	syscall(335,a,_ID);	
 
 	sem_post(&paymentC);
 	// payments counter - EXIT
@@ -246,7 +246,7 @@ void *iceCream(void *_id){
 	sleep(2);
 	
 	//printf("\nCustomer[%d]: Leaving Ice-Cream Shop.\n\n", _ID);
-	syscall(333,"Leaving Ice-Cream Shop.\n\n",_ID);
+	syscall(335,"Leaving Ice-Cream Shop.\n\n",_ID);
 	
 	return NULL;
 }
